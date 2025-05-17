@@ -1,0 +1,67 @@
+.visitors-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 3vw 1.5rem;
+  height: 6.5rem;
+  background: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+.logo {
+  width: 11.75rem;
+  height: 5.6rem;
+  object-fit: contain;
+  user-select: none;
+}
+
+.header-center {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5rem;
+  margin-left: 1.875rem;
+  margin-right: auto;
+}
+
+.search-input {
+  box-sizing: border-box;
+  width: 24.625rem;
+  height: 3.25rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 100;
+  border: none;
+  border-radius: 0.25rem;
+  font-family: "Open Sans", sans-serif;
+  box-shadow: 0 0 0.1875rem rgba(0, 0, 0, 0.3);
+  outline: none;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  color: #4e3000;
+  white-space: nowrap;
+  font-family: "Open Sans", sans-serif;
+}
+
+.stats-title {
+  margin-bottom: 0.25rem;
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.stats-values {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.stats-visited {
+  color: #80bb00;
+}
+
+.stats-expected {
+  color: #ec5937;
+}

@@ -1,0 +1,27 @@
+.bottom-filters {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-label {
+  font-weight: bold;
+}
+
+.filter-button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.filter-button.active {
+  background-color: #1976d2;
+  color: white;
+}
+
+.filter-button.gray {
+  background-color: #eee;
+}
