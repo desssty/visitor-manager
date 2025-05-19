@@ -2,7 +2,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 3vw 1.5rem;
+  padding: 0 2.7rem 1.5rem;
   height: 6.5rem;
   background: #fff;
   font-family: "Open Sans", sans-serif;
@@ -33,7 +33,8 @@
   border: none;
   border-radius: 0.25rem;
   font-family: "Open Sans", sans-serif;
-  box-shadow: 0 0 0.1875rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.05rem 0.15rem rgba(0, 0, 0, 0.05),
+    0 0.05rem 0.15rem rgba(0, 0, 0, 0.1);
   outline: none;
 }
 

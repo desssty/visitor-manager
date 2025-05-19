@@ -5,33 +5,38 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 1000;
 }
 
 .modal-content {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 0.75rem;
-  max-width: 600px;
-  width: 90%;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 91.313rem;
+  border-radius: 1.875rem;
+  background: #fff;
   font-family: "Open Sans", sans-serif;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  transition: height 0.3s ease;
+  overflow: hidden;
+}
+
+.modal-content.initial {
+  top: calc((100vh - 36.313rem) / 2); /* Центрирование */
+}
+
+.modal-content.expanded {
+  height: 46.375rem;
+  /* 👇 сохраняем top, не пересчитываем */
+  top: calc((100vh - 36.313rem) / 2);
 }
 
 .modal-close {
   position: absolute;
-  top: 0.5rem;
-  right: 0.75rem;
+  top: 1.25rem;
+  right: 1.25rem;
   background: none;
   border: none;
-  font-size: 2rem;
   cursor: pointer;
-  color: #999;
-  transition: color 0.2s;
 }
 
 .modal-close:hover {

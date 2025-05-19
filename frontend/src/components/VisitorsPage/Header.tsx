@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { FC } from "react";
 import "./Header.css";
 import CommonButton from "../../components/buttons/CommonButton/CommonButton";
-import Modal from "../../components/modals/Modal"; // добавили импорт модалки
+import AddVisitorFormModal from "../forms/AddVisitorForm/AddVisitorForm";
 import Logo from "../../assets/AgronomSadLogo.svg";
 
 interface HeaderProps {
@@ -10,6 +10,7 @@ interface HeaderProps {
   setSearchTerm: (value: string) => void;
   presentCount: number;
   absentCount: number;
+  onVisitorAdded: () => void;
 }
 
 const Header: FC<HeaderProps> = ({
@@ -17,6 +18,7 @@ const Header: FC<HeaderProps> = ({
   setSearchTerm,
   presentCount,
   absentCount,
+  onVisitorAdded,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,7 +38,7 @@ const Header: FC<HeaderProps> = ({
           </CommonButton>
         </div>
         <div className="stats">
-          <div className="stats-title">Посетили</div>
+          <div className="stats-title">Посетители</div>
           <div className="stats-values">
             <span className="stats-visited">{presentCount}</span> /{" "}
             <span className="stats-expected">{absentCount}</span>
@@ -44,38 +46,11 @@ const Header: FC<HeaderProps> = ({
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2 style={{ marginBottom: "1rem" }}>Добавить посетителя</h2>
-        <form>
-          <input
-            type="text"
-            placeholder="ФИО"
-            style={{
-              display: "block",
-              width: "100%",
-              marginBottom: "1rem",
-              padding: "0.5rem",
-              borderRadius: "0.5rem",
-              border: "1px solid #ccc",
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Компания"
-            style={{
-              display: "block",
-              width: "100%",
-              marginBottom: "1rem",
-              padding: "0.5rem",
-              borderRadius: "0.5rem",
-              border: "1px solid #ccc",
-            }}
-          />
-          <CommonButton color="green" type="submit">
-            Сохранить
-          </CommonButton>
-        </form>
-      </Modal>
+      <AddVisitorFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={onVisitorAdded}
+      />
     </>
   );
 };

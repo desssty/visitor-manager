@@ -9,11 +9,15 @@ const VisitorsPage: FC = () => {
   const [presenceFilter, setPresenceFilter] = useState<string>("Все");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  useEffect(() => {
+  const loadVisitors = () => {
     fetch("http://localhost:3000/visitors")
       .then((res) => res.json())
       .then((data) => setVisitors(data))
       .catch((err) => console.error("Ошибка загрузки данных:", err));
+  };
+
+  useEffect(() => {
+    loadVisitors();
   }, []);
 
   const presentCount = visitors.filter((v) => v.present).length;
@@ -34,6 +38,7 @@ const VisitorsPage: FC = () => {
         setSearchTerm={setSearchTerm}
         presentCount={presentCount}
         absentCount={absentCount}
+        onVisitorAdded={loadVisitors}
       />
       <VisitorsTable visitors={filteredVisitors} />
       <Filters
