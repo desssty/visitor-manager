@@ -3,14 +3,39 @@ import type { FC } from "react";
 import "./VisitorsPage.css";
 import { Header, Filters, VisitorsTable } from "../../components/VisitorsPage";
 import type { Visitor } from "../../utils/visitorTypes";
+import { useSearchParams } from "react-router-dom";
 
 const VisitorsPage: FC = () => {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
-  const [presenceFilter, setPresenceFilter] = useState<string>("Без фильтра");
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const presenceFilter = searchParams.get("presence") || "Без фильтра";
+  const searchTerm = searchParams.get("search") || "";
+
+  const setPresenceFilter = (value: string) => {
+    searchParams.set("presence", value);
+    setSearchParams(searchParams);
+  };
+
+  const setSearchTerm = (value: string) => {
+    searchParams.set("search", value);
+    setSearchParams(searchParams);
+  };
 
   const loadVisitors = () => {
-    fetch("http://localhost:3000/visitors")
+    const params = new URLSearchParams();
+
+    if (searchTerm) {
+      params.append("fullName_like", searchTerm);
+    }
+
+    if (presenceFilter === "Присутствующим") {
+      params.append("present", "true");
+    } else if (presenceFilter === "Отсутствующим") {
+      params.append("present", "false");
+    }
+
+    fetch(`http://localhost:3000/visitors?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => setVisitors(data))
       .catch((err) => console.error("Ошибка загрузки данных:", err));
@@ -18,18 +43,10 @@ const VisitorsPage: FC = () => {
 
   useEffect(() => {
     loadVisitors();
-  }, []);
+  }, [searchTerm, presenceFilter]);
 
   const presentCount = visitors.filter((v) => v.present).length;
   const absentCount = visitors.filter((v) => !v.present).length;
-
-  const filteredVisitors = visitors
-    .filter((v) => {
-      if (presenceFilter === "Присутствующим") return v.present;
-      if (presenceFilter === "Отсутствующим") return !v.present;
-      return true;
-    })
-    .filter((v) => v.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div>
@@ -40,7 +57,7 @@ const VisitorsPage: FC = () => {
         absentCount={absentCount}
         onVisitorAdded={loadVisitors}
       />
-      <VisitorsTable visitors={filteredVisitors} onSuccess={loadVisitors} />
+      <VisitorsTable visitors={visitors} onSuccess={loadVisitors} />
       <Filters
         presenceFilter={presenceFilter}
         setPresenceFilter={setPresenceFilter}

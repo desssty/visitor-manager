@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useState, useEffect } from "react";
 import CommonButton from "../../buttons/CommonButton/CommonButton";
 import "./VisitorForm.css";
+import Arrow from "../../../assets/Icon ionic-md-arrow-dropdown.svg";
 
 interface VisitorFormProps {
   initialData?: {
@@ -93,7 +94,13 @@ const VisitorForm: FC<VisitorFormProps> = ({
             onClick={() => setIsGroupOpen(!isGroupOpen)}
           >
             {group === "default" ? "Выбрать" : group}
+            <img
+              src={Arrow}
+              className={`dropdown-arrow ${isGroupOpen ? "rotate" : ""}`}
+              alt="arrow"
+            />
           </div>
+
           {isGroupOpen && (
             <div className="custom-select-options">
               {groupOptions.map((option) => (

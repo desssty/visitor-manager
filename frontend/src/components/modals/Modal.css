@@ -4,21 +4,50 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0);
   z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* исправлено */
+}
+
+.modal-backdrop.open {
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop.close {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .modal-content {
-  position: absolute;
-  top: calc((80% - 33.688rem) / 2);
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   width: 91.313rem;
   border-radius: 1.875rem;
   background: #fff;
   font-family: "Open Sans", sans-serif;
-  transition: height 0.3s ease;
   overflow: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.modal-content.open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.modal-content.close {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
 }
 
 .modal-close {

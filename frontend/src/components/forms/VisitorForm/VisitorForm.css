@@ -31,12 +31,12 @@
   flex: 1;
   box-sizing: border-box;
   height: 3.25rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
+  padding: 0.5rem 1.9375rem;
+  font-size: 1.875rem;
   font-weight: 100;
+  font-family: "Open Sans", sans-serif;
   border: none;
   border-radius: 0.25rem;
-  font-family: "Open Sans", sans-serif;
   box-shadow: 0 0.05rem 0.15rem rgba(0, 0, 0, 0.05),
     0 0.05rem 0.15rem rgba(0, 0, 0, 0.1);
   outline: none;
@@ -78,6 +78,7 @@
 }
 
 .custom-select-options {
+  will-change: max-height, opacity, transform;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -87,12 +88,14 @@
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transform: translateY(-10px);
+  transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
 }
 
 .custom-select-wrapper.open .custom-select-options {
   max-height: 20rem;
   opacity: 1;
+  transform: translateY(0);
   overflow-y: auto;
 }
 
@@ -164,4 +167,13 @@
   border: solid #757575;
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dropdown-arrow {
+  margin-left: auto;
+  transition: transform 0.4s ease;
+}
+
+.rotate {
+  transform: rotate(180deg);
 }
