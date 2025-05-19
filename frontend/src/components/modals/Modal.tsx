@@ -6,18 +6,14 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  isExpanded?: boolean;
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, children, isExpanded }) => {
+const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
     <div className="modal-backdrop">
-      <div
-        className={`modal-content ${isExpanded ? "expanded" : "initial"}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>
           <img src={CloseIcon} alt="close button" />
         </button>

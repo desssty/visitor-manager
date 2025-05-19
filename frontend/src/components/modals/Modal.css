@@ -10,6 +10,7 @@
 
 .modal-content {
   position: absolute;
+  top: calc((80% - 33.688rem) / 2);
   left: 50%;
   transform: translateX(-50%);
   width: 91.313rem;
@@ -18,16 +19,6 @@
   font-family: "Open Sans", sans-serif;
   transition: height 0.3s ease;
   overflow: hidden;
-}
-
-.modal-content.initial {
-  top: calc((100vh - 36.313rem) / 2); /* Центрирование */
-}
-
-.modal-content.expanded {
-  height: 46.375rem;
-  /* 👇 сохраняем top, не пересчитываем */
-  top: calc((100vh - 36.313rem) / 2);
 }
 
 .modal-close {

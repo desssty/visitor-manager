@@ -6,7 +6,7 @@ import type { Visitor } from "../../utils/visitorTypes";
 
 const VisitorsPage: FC = () => {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
-  const [presenceFilter, setPresenceFilter] = useState<string>("Все");
+  const [presenceFilter, setPresenceFilter] = useState<string>("Без фильтра");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const loadVisitors = () => {
@@ -40,7 +40,7 @@ const VisitorsPage: FC = () => {
         absentCount={absentCount}
         onVisitorAdded={loadVisitors}
       />
-      <VisitorsTable visitors={filteredVisitors} />
+      <VisitorsTable visitors={filteredVisitors} onSuccess={loadVisitors} />
       <Filters
         presenceFilter={presenceFilter}
         setPresenceFilter={setPresenceFilter}

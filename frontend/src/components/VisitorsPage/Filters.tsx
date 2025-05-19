@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import "./Filters.css";
 
 interface FiltersProps {
@@ -28,9 +28,10 @@ const Filters: FC<FiltersProps> = ({ presenceFilter, setPresenceFilter }) => {
       </button>
       <button
         className={`filter-button ${
-          presenceFilter === "Все" ? "active gray" : "gray"
+          presenceFilter === "Без фильтра" ? "active" : ""
         }`}
-        onClick={() => setPresenceFilter("Все")}
+        disabled={presenceFilter === "Без фильтра"}
+        onClick={() => setPresenceFilter("Без фильтра")}
       >
         Без фильтра
       </button>

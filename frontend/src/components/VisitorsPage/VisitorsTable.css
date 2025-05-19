@@ -1,14 +1,37 @@
 .visitors-table-wrapper {
-  padding: 0 3vw;
+  padding: 0 3.125rem;
   background-color: #fff;
+  margin-top: 8.5rem;
+  margin-bottom: 9.189rem;
+  max-height: calc(100vh - 9.189rem - 8.5rem);
 }
 
 .visitors-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
   font-family: "Open Sans", sans-serif;
   font-size: 1rem;
+}
+
+.visitors-table thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.visitors-table tbody {
+  display: block;
+  max-height: calc(100vh - 9.189rem - 8.5rem - 3.1rem);
+  overflow-y: auto;
+  width: 100%;
+}
+
+.visitors-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .visitors-table th {
@@ -33,6 +56,8 @@
   width: 3.688rem;
   height: 3.688rem;
   border-radius: 50%;
+
+  margin-left: 2.75rem;
 }
 
 .present {

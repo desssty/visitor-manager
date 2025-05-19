@@ -1,8 +1,12 @@
 .visitors-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 2.7rem 1.5rem;
+  padding: 0.5rem 3.125rem 1.5rem;
   height: 6.5rem;
   background: #fff;
   font-family: "Open Sans", sans-serif;

@@ -1,8 +1,7 @@
 import type { FC } from "react";
-import { useState } from "react";
 import Modal from "../../modals/Modal";
-import CommonButton from "../../buttons/CommonButton/CommonButton";
-import "./AddVisitorForm.css";
+import VisitorForm from "../VisitorForm/VisitorForm";
+import type { VisitorFormData } from "../../../utils/VisitorFormData";
 
 interface AddVisitorFormModalProps {
   isOpen: boolean;
@@ -15,134 +14,50 @@ const AddVisitorFormModal: FC<AddVisitorFormModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const [fullName, setFullName] = useState("");
-  const [company, setCompany] = useState("");
-  const [group, setGroup] = useState("default");
-  const [present, setPresent] = useState(false);
-  const groupOptions = ["Прохожий", "Клиент", "Партнер"];
-  const [isGroupOpen, setIsGroupOpen] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!fullName || !company || group === "default") {
-      alert("Пожалуйста, заполните все поля");
-      return;
-    }
-
-    const newVisitor = {
-      id: Date.now().toString(),
-      fullName,
-      company,
-      group,
-      present,
-    };
-
+  const handleSubmit = async (data: VisitorFormData) => {
     try {
+      // Получаем текущих посетителей
+      const visitorsResponse = await fetch("http://localhost:3000/visitors");
+      if (!visitorsResponse.ok) throw new Error("Ошибка при загрузке списка");
+
+      const visitors: { id: string }[] = await visitorsResponse.json();
+
+      // Определяем максимальный id (предполагаем, что id — это число в строке)
+      const maxId = visitors.reduce((max, visitor) => {
+        const idNumber = parseInt(visitor.id, 10);
+        return isNaN(idNumber) ? max : Math.max(max, idNumber);
+      }, 0);
+
+      const newVisitor = {
+        id: (maxId + 1).toString(),
+        ...data,
+      };
+
+      // Отправляем нового посетителя
       const response = await fetch("http://localhost:3000/visitors", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newVisitor),
       });
 
-      if (!response.ok) {
-        throw new Error("Ошибка при добавлении посетителя");
-      }
+      if (!response.ok) throw new Error();
 
-      setFullName("");
-      setCompany("");
-      setGroup("default");
-      setPresent(false);
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Ошибка:", error);
+      console.error(error);
       alert("Не удалось добавить посетителя");
     }
   };
 
-  const handleGroupSelect = (value: string) => {
-    setGroup(value);
-    setIsGroupOpen(false);
-  };
-
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isExpanded={isGroupOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <div className="add-visitor-modal-wrapper">
-        <form className="add-visitor-form" onSubmit={handleSubmit}>
-          <div className="form-row">
-            <label className="form-label">ФИО</label>
-            <input
-              type="text"
-              className="form-input"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </div>
-
-          <div className="form-row">
-            <label className="form-label">Компания</label>
-            <input
-              type="text"
-              className="form-input"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-            />
-          </div>
-
-          <div className="form-row">
-            <label className="form-label">Группа</label>
-            <div
-              className={`custom-select-wrapper ${isGroupOpen ? "open" : ""}`}
-            >
-              <div
-                className="custom-select-selected"
-                onClick={() => setIsGroupOpen(!isGroupOpen)}
-              >
-                {group === "default" ? "Выбрать" : group}
-              </div>
-              {isGroupOpen && (
-                <div className="custom-select-options">
-                  {groupOptions.map((option) => (
-                    <div
-                      key={option}
-                      className="custom-select-option"
-                      onClick={() => handleGroupSelect(option)}
-                    >
-                      {option}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="form-row">
-            <label className="form-label" htmlFor="presence">
-              Присутствие
-            </label>
-            <label className="custom-checkbox">
-              <input
-                type="checkbox"
-                id="presence"
-                checked={present}
-                onChange={(e) => setPresent(e.target.checked)}
-              />
-              <span className="checkmark"></span>
-            </label>
-          </div>
-
-          <div className="button-panel">
-            <CommonButton color="green" type="submit">
-              Добавить
-            </CommonButton>
-            <CommonButton color="gray" type="button" onClick={onClose}>
-              Закрыть
-            </CommonButton>
-          </div>
-        </form>
+        <VisitorForm
+          onSubmit={handleSubmit}
+          onClose={onClose}
+          submitLabel="Добавить"
+        />
       </div>
     </Modal>
   );
